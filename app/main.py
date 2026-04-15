@@ -1,10 +1,17 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Header, HTTPException, Depends
 from pydantic import BaseModel
 import pandas as pd
 from datetime import datetime
 import os
 
 app = FastAPI()
+
+API_KEY = os.getenv("API_KEY", "dev-key")
+
+
+def validate_api_key(x_api_key: str = Header(None)):
+    if x_api_key != API_KEY:
+        raise HTTPException(status_code=401, detail="Invalid API key")
 
 
 class CarrierRequest(BaseModel):
@@ -49,13 +56,13 @@ def health():
 
 
 @app.get("/loads")
-def get_loads():
+def get_loads(_: str = Depends(validate_api_key)):
     df = pd.read_csv("data/loads.csv")
     return df.to_dict(orient="records")
 
 
 @app.get("/call-logs")
-def get_call_logs():
+def get_call_logs(_: str = Depends(validate_api_key)):
     if not os.path.exists("data/call_logs.csv"):
         return {"count": 0, "logs": []}
 
@@ -67,7 +74,7 @@ def get_call_logs():
 
 
 @app.post("/verify-carrier")
-def verify_carrier(request: CarrierRequest):
+def verify_carrier(request: CarrierRequest, _: str = Depends(validate_api_key)):
     approved_mc_numbers = {
         "123456": "ABC Trucking LLC",
         "654321": "Lone Star Freight",
@@ -81,29 +88,31 @@ def verify_carrier(request: CarrierRequest):
             "mc_number": mc_number,
             "eligible": True,
             "carrier_name": approved_mc_numbers[mc_number],
-            "status": "authorized"
+            "status": "authorized",
+            "reason": None
         }
 
     return {
         "mc_number": mc_number,
         "eligible": False,
         "carrier_name": None,
-        "status": "not_found_or_not_authorized"
+        "status": "not_found_or_not_authorized",
+        "reason": "MC number not found in approved carrier list"
     }
 
 
 @app.post("/search-loads")
-def search_loads(request: LoadSearchRequest):
+def search_loads(request: LoadSearchRequest, _: str = Depends(validate_api_key)):
     df = pd.read_csv("data/loads.csv")
 
     if request.origin:
-        df = df[df["origin"].str.lower() == request.origin.strip().lower()]
+        df = df[df["origin"].astype(str).str.lower() == request.origin.strip().lower()]
 
     if request.destination:
-        df = df[df["destination"].str.lower() == request.destination.strip().lower()]
+        df = df[df["destination"].astype(str).str.lower() == request.destination.strip().lower()]
 
     if request.equipment_type:
-        df = df[df["equipment_type"].str.lower() == request.equipment_type.strip().lower()]
+        df = df[df["equipment_type"].astype(str).str.lower() == request.equipment_type.strip().lower()]
 
     return {
         "count": len(df),
@@ -112,7 +121,7 @@ def search_loads(request: LoadSearchRequest):
 
 
 @app.post("/evaluate-offer")
-def evaluate_offer(request: OfferEvaluationRequest):
+def evaluate_offer(request: OfferEvaluationRequest, _: str = Depends(validate_api_key)):
     loadboard_rate = request.loadboard_rate
     carrier_offer = request.carrier_offer
     round_number = request.round_number
@@ -154,7 +163,7 @@ def evaluate_offer(request: OfferEvaluationRequest):
 
 
 @app.post("/log-call")
-def log_call(request: CallLogRequest):
+def log_call(request: CallLogRequest, _: str = Depends(validate_api_key)):
     log_entry = {
         "timestamp": datetime.now().isoformat(timespec="seconds"),
         "mc_number": request.mc_number,
