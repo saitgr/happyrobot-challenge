@@ -1,0 +1,2 @@
+timestamp,mc_number,eligible,load_id,initial_rate,carrier_offer,final_rate,negotiation_rounds,outcome,sentiment,transferred_to_rep,summary
+2026-04-11T23:55:36,123456,True,LD-1001,1000.0,1100.0,1050.0,2,agreed_and_transferred,positive,True,"Carrier was verified, matched to LD-1001, negotiated from 1100 to 1050, and accepted transfer."

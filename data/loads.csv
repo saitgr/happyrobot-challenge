@@ -1,0 +1,4 @@
+load_id,origin,destination,pickup_datetime,delivery_datetime,equipment_type,loadboard_rate,notes,weight,commodity_type,num_of_pieces,miles,dimensions
+LD-1001,Dallas TX,Houston TX,2026-04-11 09:00,2026-04-11 17:00,Dry Van,1000,General freight,12000,General Goods,10,240,48x40x60
+LD-1002,Miami FL,Atlanta GA,2026-04-11 08:00,2026-04-12 14:00,Reefer,1400,Keep refrigerated,18000,Food,14,660,48x40x72
+LD-1003,Chicago IL,St Louis MO,2026-04-12 07:00,2026-04-12 15:00,Flatbed,1100,Tarp required,15000,Steel,8,300,96x48x50
