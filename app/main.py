@@ -24,6 +24,7 @@ class LoadSearchRequest(BaseModel):
     origin: str | None = None
     destination: str | None = None
     equipment_type: str | None = None
+    pickup_date: str | None = None
 
 
 class OfferEvaluationRequest(BaseModel):
@@ -116,7 +117,6 @@ def verify_carrier(request: CarrierRequest, _: str = Depends(validate_api_key)):
         "reason": "MC number not found in approved carrier list"
     }
 
-
 @app.post("/search-loads")
 def search_loads(request: LoadSearchRequest, _: str = Depends(validate_api_key)):
     df = pd.read_csv("data/loads.csv")
@@ -129,6 +129,9 @@ def search_loads(request: LoadSearchRequest, _: str = Depends(validate_api_key))
 
     if request.equipment_type:
         df = df[df["equipment_type"].astype(str).str.lower() == request.equipment_type.strip().lower()]
+
+    if request.pickup_date:
+        df = df[df["pickup_datetime"].astype(str).str.startswith(request.pickup_date)]
 
     return {
         "count": len(df),
