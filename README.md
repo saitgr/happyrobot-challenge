@@ -96,7 +96,7 @@ All endpoints require the header `x-api-key: <your-key>`.
 | Variable | Default | Description |
 |---|---|---|
 | `API_KEY` | `dev-key` | API key for endpoint authentication |
-| `FMCSA_API_KEY` | - | FMCSA API key for production carrier verification |
+| `FMCSA_API_KEY` | cdc33e44d693a3a58451898d4ec9df862c65b954 | FMCSA API key for production carrier verification |
 
 ---
 

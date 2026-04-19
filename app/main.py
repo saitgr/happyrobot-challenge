@@ -142,17 +142,10 @@ def evaluate_offer(request: OfferEvaluationRequest, _: str = Depends(validate_ap
     carrier_offer = request.carrier_offer
     round_number = request.round_number
 
-    if round_number >= 3:
-        return {
-            "load_id": request.load_id,
-            "decision": "reject",
-            "counter_offer": None,
-            "message": "We've reached our negotiation limit on this load."
-        }
-
     acceptable_max = loadboard_rate * 1.05
     counter_max = loadboard_rate * 1.12
 
+    # Evaluate price first, regardless of round number
     if carrier_offer <= acceptable_max:
         return {
             "load_id": request.load_id,
@@ -162,12 +155,27 @@ def evaluate_offer(request: OfferEvaluationRequest, _: str = Depends(validate_ap
         }
 
     if carrier_offer <= counter_max:
+        if round_number >= 3:
+            return {
+                "load_id": request.load_id,
+                "decision": "reject",
+                "counter_offer": None,
+                "message": "We've reached our negotiation limit on this load."
+            }
         midpoint = (loadboard_rate + carrier_offer) / 2
         return {
             "load_id": request.load_id,
             "decision": "counter",
             "counter_offer": round(midpoint, 2),
             "message": f"I may be able to do {midpoint:.0f} on this one."
+        }
+
+    if round_number >= 3:
+        return {
+            "load_id": request.load_id,
+            "decision": "reject",
+            "counter_offer": None,
+            "message": "We've reached our negotiation limit on this load."
         }
 
     return {
