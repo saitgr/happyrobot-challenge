@@ -122,7 +122,7 @@ docker run -p 8000:8000 -e API_KEY=your-key happyrobot
 2. Create an account at [railway.app](https://railway.app)
 3. Click **New Project** → **Deploy from GitHub repo**
 4. Select this repository
-5. Add environment variable: `API_KEY=your-secret-key`
+5. Add environment variable: `API_KEY=dev-key`
 6. Railway detects the Dockerfile and deploys automatically
 7. Go to **Settings** → **Networking** → **Generate Domain** to get your public HTTPS URL
 
