@@ -1,2 +1,41 @@
-timestamp,mc_number,eligible,load_id,initial_rate,carrier_offer,final_rate,negotiation_rounds,outcome,sentiment,transferred_to_rep,summary
-2026-04-11T23:55:36,123456,True,LD-1001,1000.0,1100.0,1050.0,2,agreed_and_transferred,positive,True,"Carrier was verified, matched to LD-1001, negotiated from 1100 to 1050, and accepted transfer."
+timestamp,mc_number,eligible,load_id,initial_rate,carrier_offer,final_rate,negotiation_rounds,outcome,sentiment,summary
+2026-04-14 08:12:33,123456,True,LD-1001,1000.0,1080.0,1040.0,2,agreed_and_transferred,positive,Carrier agreed on 1040 for load LD-1001 from Dallas to Houston.
+2026-04-14 09:05:11,654321,True,LD-1002,1400.0,1600.0,,3,rejected,negative,Carrier requested 1600 for load LD-1002 but no agreement was reached after 3 rounds.
+2026-04-14 10:22:45,999999,False,,,,,0,ineligible,neutral,Carrier MC 999999 was not found in the approved carrier list.
+2026-04-14 11:45:02,111222,True,LD-1005,850.0,900.0,875.0,1,agreed_and_transferred,positive,Carrier accepted 875 for load LD-1005 from Houston to Dallas.
+2026-04-14 13:10:18,123456,True,LD-1010,800.0,,,0,not_interested,neutral,Carrier was not interested in any available loads on the Miami to Orlando route.
+2026-04-14 14:33:27,654321,True,LD-1003,1100.0,1250.0,1175.0,2,agreed_and_transferred,positive,Carrier agreed on 1175 for load LD-1003 from Chicago to St Louis after two rounds.
+2026-04-14 15:50:44,888777,False,,,,,0,ineligible,negative,Carrier MC 888777 was not eligible and expressed frustration before the call ended.
+2026-04-14 16:22:09,111222,True,LD-1006,1200.0,1350.0,,3,rejected,neutral,No agreement reached for load LD-1006 after 3 rounds.
+2026-04-14 17:05:33,123456,True,,,,,0,no_loads_found,neutral,No loads found matching the carrier lane request from Los Angeles to Denver.
+2026-04-15 08:30:15,654321,True,LD-1004,950.0,1000.0,975.0,1,agreed_and_transferred,positive,Carrier accepted 975 for load LD-1004 from Los Angeles to Phoenix.
+2026-04-15 09:15:42,111222,True,LD-1007,1050.0,1100.0,1075.0,1,agreed_and_transferred,positive,Carrier agreed on 1075 for load LD-1007 from Chicago to Detroit.
+2026-04-15 10:40:28,555444,False,,,,,0,ineligible,neutral,Carrier MC 555444 not found in approved list. Call ended professionally.
+2026-04-15 11:22:55,123456,True,LD-1012,600.0,650.0,625.0,1,agreed_and_transferred,positive,Quick deal reached at 625 for load LD-1012 from Nashville to Memphis.
+2026-04-15 12:45:03,654321,True,LD-1014,1100.0,1300.0,,3,rejected,negative,Carrier insisted on 1300 for load LD-1014. No deal reached after 3 rounds.
+2026-04-15 13:30:17,111222,True,,,,,0,no_loads_found,neutral,No loads available from Atlanta to Denver with flatbed equipment.
+2026-04-15 14:55:38,123456,True,LD-1016,650.0,700.0,675.0,1,agreed_and_transferred,positive,Carrier accepted 675 for load LD-1016 from Dallas to San Antonio.
+2026-04-15 15:20:44,777666,False,,,,,0,ineligible,negative,MC 777666 not authorized. Carrier was argumentative before call ended.
+2026-04-15 16:10:22,654321,True,LD-1018,500.0,,,0,not_interested,neutral,Carrier not interested in short haul load LD-1018 from Chicago to Milwaukee.
+2026-04-15 17:05:09,111222,True,LD-1020,600.0,650.0,625.0,1,agreed_and_transferred,positive,Carrier agreed on 625 for load LD-1020 from Houston to Austin.
+2026-04-16 08:20:33,123456,True,LD-1009,700.0,780.0,740.0,2,agreed_and_transferred,positive,After two rounds carrier agreed on 740 for load LD-1009 from Los Angeles to Las Vegas.
+2026-04-16 09:45:11,654321,True,LD-1011,900.0,1050.0,,3,rejected,negative,Carrier wanted 1050 for flatbed load LD-1011. No agreement reached after 3 rounds.
+2026-04-16 10:30:28,111222,True,LD-1013,750.0,800.0,775.0,1,agreed_and_transferred,positive,Carrier accepted 775 for load LD-1013 from Chicago to Indianapolis.
+2026-04-16 11:15:44,333222,False,,,,,0,ineligible,neutral,MC 333222 not in approved carrier list. Call ended.
+2026-04-16 12:40:02,123456,True,LD-1015,1150.0,1300.0,1225.0,2,agreed_and_transferred,positive,Carrier agreed on 1225 for oversized load LD-1015 from Atlanta to Charlotte.
+2026-04-16 13:55:17,654321,True,,,,,0,no_loads_found,neutral,No reefer loads found from Miami to Chicago.
+2026-04-16 14:20:33,111222,True,LD-1017,1300.0,1500.0,,3,rejected,negative,Carrier requested 1500 for reefer load LD-1017. Too high no deal reached.
+2026-04-16 15:45:09,123456,True,LD-1019,950.0,,,0,not_interested,neutral,Carrier not interested in flatbed load LD-1019 from Miami to Jacksonville.
+2026-04-16 16:30:22,654321,True,LD-1008,750.0,800.0,775.0,1,agreed_and_transferred,positive,Carrier accepted 775 for load LD-1008 from Dallas to Oklahoma City.
+2026-04-17 08:10:44,111222,True,LD-1001,1000.0,1100.0,1050.0,2,agreed_and_transferred,positive,Carrier agreed on 1050 after two rounds for load LD-1001 Dallas to Houston.
+2026-04-17 09:25:33,123456,True,LD-1002,1400.0,1600.0,,3,rejected,negative,No agreement on reefer load LD-1002. Carrier wanted too much above market rate.
+2026-04-17 10:40:18,444333,False,,,,,0,ineligible,neutral,MC 444333 not authorized to work with Acme Logistics.
+2026-04-17 11:15:02,654321,True,LD-1006,1200.0,1280.0,1240.0,1,agreed_and_transferred,positive,Carrier accepted 1240 for reefer load LD-1006 from Atlanta to Nashville.
+2026-04-17 12:30:44,111222,True,,,,,0,no_loads_found,negative,Carrier frustrated after no loads found on their preferred route from Phoenix to Denver.
+2026-04-17 13:45:17,123456,True,LD-1010,800.0,850.0,825.0,1,agreed_and_transferred,positive,Quick deal at 825 for reefer load LD-1010 from Miami to Orlando.
+2026-04-17 14:20:33,654321,True,LD-1004,950.0,,,0,not_interested,neutral,Carrier not interested in the available loads on the Los Angeles to Phoenix route.
+2026-04-17 15:55:09,111222,True,LD-1016,650.0,700.0,675.0,1,agreed_and_transferred,positive,Carrier agreed on 675 for dry van load LD-1016 from Dallas to San Antonio.
+2026-04-17 16:40:22,123456,True,LD-1003,1100.0,1250.0,1175.0,2,agreed_and_transferred,positive,After negotiation carrier accepted 1175 for flatbed load LD-1003 Chicago to St Louis.
+2026-04-18 08:15:33,654321,True,LD-1005,850.0,950.0,,3,rejected,negative,Three rounds of negotiation failed for load LD-1005. Carrier wanted 950 minimum.
+2026-04-18 09:30:11,111222,True,LD-1012,600.0,630.0,615.0,1,agreed_and_transferred,positive,Carrier accepted 615 for short haul load LD-1012 from Nashville to Memphis.
+2026-04-18 10:45:22,123456,True,LD-1020,600.0,650.0,625.0,1,agreed_and_transferred,positive,Carrier agreed on 625 for load LD-1020 from Houston to Austin.

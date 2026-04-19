@@ -1,12 +1,14 @@
 from fastapi import FastAPI, Header, HTTPException, Depends
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 import pandas as pd
 from datetime import datetime
 import os
+import httpx
 
 app = FastAPI()
 
 API_KEY = os.getenv("API_KEY", "dev-key")
+FMCSA_API_KEY = os.getenv("FMCSA_API_KEY", "cdc33e44d693a3a58451898d4ec9df862c65b954")
 
 
 def validate_api_key(x_api_key: str = Header(None)):
@@ -41,8 +43,14 @@ class CallLogRequest(BaseModel):
     negotiation_rounds: int = 0
     outcome: str
     sentiment: str
-    transferred_to_rep: bool = False
     summary: str
+
+    @field_validator('initial_rate', 'carrier_offer', 'final_rate', mode='before')
+    @classmethod
+    def empty_to_none(cls, v):
+        if v == "" or v is None or str(v).strip() in ("null", "undefined", "none"):
+            return None
+        return v
 
 
 @app.get("/")
@@ -61,27 +69,35 @@ def get_loads(_: str = Depends(validate_api_key)):
     return df.to_dict(orient="records")
 
 
-@app.get("/call-logs")
-def get_call_logs(_: str = Depends(validate_api_key)):
-    if not os.path.exists("data/call_logs.csv"):
-        return {"count": 0, "logs": []}
-
-    df = pd.read_csv("data/call_logs.csv")
-    return {
-        "count": len(df),
-        "logs": df.to_dict(orient="records")
-    }
+# FMCSA API integration — ready to connect when API key is active
+# async def verify_with_fmcsa(mc_number: str):
+#     url = f"https://mobile.fmcsa.dot.gov/qc/services/carriers/docket-number/{mc_number}?webKey={FMCSA_API_KEY}"
+#     async with httpx.AsyncClient() as client:
+#         response = await client.get(url)
+#         data = response.json()
+#         carrier = data.get("content", {}).get("carrier", {})
+#         allowed = carrier.get("allowedToOperate") == "Y"
+#         name = carrier.get("legalName") or carrier.get("dbaName")
+#         return allowed, name
 
 
 @app.post("/verify-carrier")
 def verify_carrier(request: CarrierRequest, _: str = Depends(validate_api_key)):
+    # Simulated carrier database — in production this calls the FMCSA API
     approved_mc_numbers = {
         "123456": "ABC Trucking LLC",
         "654321": "Lone Star Freight",
-        "111222": "Sunrise Logistics"
+        "111222": "Sunrise Logistics",
+        "789012": "Blue Ridge Transport",
+        "345678": "Pacific Haulers Inc",
+        "901234": "Midwest Freight Co",
+        "456789": "Southern Cross Carriers",
+        "234567": "Great Plains Logistics",
+        "678901": "Atlas Trucking Group",
+        "112233": "Liberty Freight LLC",
     }
 
-    mc_number = request.mc_number.strip()
+    mc_number = str(request.mc_number).strip()
 
     if mc_number in approved_mc_numbers:
         return {
@@ -131,7 +147,7 @@ def evaluate_offer(request: OfferEvaluationRequest, _: str = Depends(validate_ap
             "load_id": request.load_id,
             "decision": "reject",
             "counter_offer": None,
-            "message": "We’ve reached our negotiation limit on this load."
+            "message": "We've reached our negotiation limit on this load."
         }
 
     acceptable_max = loadboard_rate * 1.05
@@ -156,9 +172,9 @@ def evaluate_offer(request: OfferEvaluationRequest, _: str = Depends(validate_ap
 
     return {
         "load_id": request.load_id,
-        "decision": "reject",
+        "decision": "too_high",
         "counter_offer": None,
-        "message": "That rate is above our range for this load."
+        "message": "That rate is above our range. Could you come back with a lower offer?"
     }
 
 
@@ -175,7 +191,6 @@ def log_call(request: CallLogRequest, _: str = Depends(validate_api_key)):
         "negotiation_rounds": request.negotiation_rounds,
         "outcome": request.outcome,
         "sentiment": request.sentiment,
-        "transferred_to_rep": request.transferred_to_rep,
         "summary": request.summary
     }
 
