@@ -14,6 +14,8 @@ LD-1012,Chicago,Indianapolis,2026-04-20 11:00,2026-04-20 16:00,Flatbed,900,Overs
 LD-1013,Chicago,Indianapolis,2026-04-21 08:00,2026-04-21 13:00,Dry Van,650,No special requirements,8000,Consumer Goods,10,180,48x40x60
 LD-1014,Miami,Atlanta,2026-04-20 08:00,2026-04-21 14:00,Reefer,1400,Keep refrigerated,18000,Food,14,660,48x40x72
 LD-1015,Miami,Atlanta,2026-04-20 10:00,2026-04-21 16:00,Reefer,1300,Temperature controlled 34F,20000,Dairy,18,660,48x40x72
+LD-1016,Miami,Atlanta,2026-04-20 12:00,2026-04-21 18:00,Dry Van,1100,No special requirements,10000,Consumer Goods,20,660,48x40x60
+LD-1017,Miami,Atlanta,2026-04-21 09:00,2026-04-22 15:00,Reefer,1350,Temperature controlled 36F,16000,Food,12,660,48x40x72
 LD-1018,Los Angeles,Phoenix,2026-04-20 10:00,2026-04-21 08:00,Dry Van,950,No special requirements,10000,Consumer Goods,20,370,48x40x60
 LD-1019,Los Angeles,Phoenix,2026-04-20 12:00,2026-04-21 10:00,Reefer,1150,Temperature controlled 36F,15000,Produce,22,370,48x40x72
 LD-1020,Los Angeles,Phoenix,2026-04-20 14:00,2026-04-21 12:00,Flatbed,1000,Tarp required,18000,Lumber,6,370,96x48x48
